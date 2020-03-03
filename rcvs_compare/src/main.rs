@@ -23,8 +23,8 @@ fn compare(one: &Vec<Vec<f64>>, two: &Vec<Vec<f64>>, error: f64) -> f64 {
     assert!(one.len() <= two.len());
 
     let length = one.len();
-    let mut count: f64 = 0.0;
-    let mut seen: HashSet<usize> = HashSet::new();
+    let mut count = 0.0;
+    let mut seen = HashSet::new();
 
     for orig in one {
         let size = orig.len();
@@ -76,7 +76,7 @@ fn main() {
     let ray = 1280; //name of directory
     let obj_cur = "tiguan"; //name of object
 
-    let mut objects = Vec::<(String, Vec<Vec<f64>>)>::new();
+    let mut objects = Vec::new();
     let path_rays = format!("./rays/{}/", ray);
     let paths = fs::read_dir(path_rays).unwrap();
 
