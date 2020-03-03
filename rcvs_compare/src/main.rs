@@ -89,7 +89,6 @@ fn main() {
     for path in paths {
         let path = path.unwrap();
         let name = path.file_name();
-
         objects.push((
             name.to_string_lossy().into_owned(),
             read(fs::File::open(path.path()).unwrap()).unwrap(),
@@ -100,12 +99,14 @@ fn main() {
     result.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
     print!("{}\n", "_".repeat(200));
     println!("{}", obj.0);
-    for line in result {
+    let bar = "▮".repeat(100);
+    for (idx, similarity) in result {
+        let percent = (similarity * 100.0).round() as usize;
         println!(
             "{:>36} |{:<100}| {:<14}",
-            objects[line.0].0,
-            "▮".repeat((line.1 * 100.0).round() as usize),
-            line.1
+            objects[idx].0,
+            &bar[..percent],
+            similarity
         );
     }
 }
