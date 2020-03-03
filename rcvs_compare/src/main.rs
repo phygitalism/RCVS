@@ -18,7 +18,7 @@ fn read(io: impl Read) -> io::Result<Vec<Vec<f64>>> {
 }
 
 //Compares two objects
-fn compare(one: &Vec<Vec<f64>>, two: &Vec<Vec<f64>>, error: f64) -> f64 {
+fn compare(one: &[Vec<f64>], two: &[Vec<f64>], error: f64) -> f64 {
     // assert_eq!(one.len(), two.len());
     assert!(one.len() <= two.len());
 
@@ -57,8 +57,8 @@ fn compare(one: &Vec<Vec<f64>>, two: &Vec<Vec<f64>>, error: f64) -> f64 {
 
 //Compares one object with others on different threads
 fn one_with_others(
-    obj: &Vec<Vec<f64>>,
-    dict: &Vec<(String, Vec<Vec<f64>>)>,
+    obj: &[Vec<f64>],
+    dict: &[(String, Vec<Vec<f64>>)],
 ) -> Vec<(usize, f64)> {
     let length = dict.len();
 
