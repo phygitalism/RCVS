@@ -29,21 +29,20 @@ fn compare(one: &Vec<Vec<f64>>, two: &Vec<Vec<f64>>, error: f64) -> f64 {
         for i in 0..length {
             if seen.contains(&i) {
                 continue;
-            } else {
-                let targ = &two[i];
-
-                if (0..size).map(|x| (orig[x] - targ[x]).abs()).sum::<f64>() > error * size as f64 {
-                    continue;
-                }
-
-                let err_sum = (0..size)
-                    .map(|x| 1.0 - (orig[x] - targ[x]).abs())
-                    .sum::<f64>();
-
-                count += err_sum / size as f64;
-                seen.insert(i);
-                break;
             }
+            let targ = &two[i];
+
+            let similarity = (0..size)
+                .map(|x| 1.0 - (orig[x] - targ[x]).abs())
+                .sum::<f64>();
+
+            if similarity < (1.0 - error) * size as f64 {
+                continue;
+            }
+
+            count += err_sum / size as f64;
+            seen.insert(i);
+            break;
         }
     }
     //println!("{}", count / length as f64);
