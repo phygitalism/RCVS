@@ -57,16 +57,17 @@ fn compare(one: &Vec<Vec<f64>>, two: &Vec<Vec<f64>>, error: f64) -> f64 {
 
 //Compares one object with others on different threads
 fn one_with_others(
-    obj: &(String, Vec<Vec<f64>>),
+    obj: &Vec<Vec<f64>>,
     dict: &Vec<(String, Vec<Vec<f64>>)>,
 ) -> Vec<(usize, f64)> {
     let length = dict.len();
 
-    (0..length)
-        .into_par_iter()
-        .map(|x| {
-            println!("Puny human is instructed to wait.. {:}/{:}", x + 1, length);
-            (x, compare(&obj.1, &dict[x].1, 0.01))
+    dict.into_par_iter()
+        .map(|x| &x.1)
+        .enumerate()
+        .map(|(i, row)| {
+            println!("Puny human is instructed to wait.. {}/{}", i + 1, length);
+            (i, compare(obj, row, 0.01))
         })
         .collect()
 }
@@ -95,7 +96,7 @@ fn main() {
         ));
     }
 
-    let mut result = one_with_others(&obj, &objects);
+    let mut result = one_with_others(&obj.1, &objects);
     result.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
     print!("{}\n", "_".repeat(200));
     println!("{}", obj.0);
