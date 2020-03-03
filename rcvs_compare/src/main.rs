@@ -46,7 +46,7 @@ fn compare(one: &Vec<Vec<f64>>, two: &Vec<Vec<f64>>, error: f64) -> f64 {
             }
         }
     }
-    //println!("{:}", count / length as f64);
+    //println!("{}", count / length as f64);
     count / length as f64
 }
 
@@ -71,10 +71,10 @@ fn main() {
     let obj_cur = "tiguan"; //name of object
 
     let mut objects = Vec::<(String, Vec<Vec<f64>>)>::new();
-    let path_rays = format!("./rays/{:}/", ray);
+    let path_rays = format!("./rays/{}/", ray);
     let paths = fs::read_dir(path_rays).unwrap();
 
-    let obj_path = format!("./rays/{:}/{:}", ray, obj_cur);
+    let obj_path = format!("./rays/{}/{}", ray, obj_cur);
     let obj = (
         obj_cur.to_string(),
         read(fs::File::open(obj_path).unwrap()).unwrap(),
@@ -93,7 +93,7 @@ fn main() {
     let mut result = one_with_others(&obj, &objects);
     result.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
     print!("{}\n", "_".repeat(200));
-    println!("{:}", obj.0);
+    println!("{}", obj.0);
     for line in result {
         println!(
             "{:>36} |{:<100}| {:<14}",
