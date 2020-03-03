@@ -1,20 +1,17 @@
 use rayon::prelude::*;
 use std::collections::HashSet;
 use std::fs;
-use std::io::{BufRead, BufReader, Error, Read};
+use std::io::{self, BufRead, BufReader, Read};
 
 //Creates Vector from file
-fn read<R: Read>(io: R) -> Result<Vec<Vec<f64>>, Error> {
+fn read(io: impl Read) -> io::Result<Vec<Vec<f64>>> {
     let br = BufReader::new(io);
     br.lines()
         .map(|line| {
-            line.and_then(|v| {
-                Ok(v.split_whitespace()
-                    .map(|x| match x.trim().parse::<f64>() {
-                        Ok(value) => value,
-                        Err(_) => -1.0,
-                    })
-                    .collect::<Vec<f64>>())
+            line.map(|line| {
+                line.split_whitespace()
+                    .map(|x| x.parse().unwrap_or(-1.0))
+                    .collect()
             })
         })
         .collect()
