@@ -49,7 +49,6 @@ fn compare(one: &Vec<Vec<f64>>, two: &Vec<Vec<f64>>, error: f64) -> f64 {
             }
         }
     }
-    //println!("{:}", count / length as f64);
     count / length as f64
 }
 
@@ -71,7 +70,7 @@ fn one_with_others(
 
 fn main() {
     let ray = 1280; //name of directory
-    let obj_cur = "tiguan"; //name of object
+    let obj_cur = "Suzanne_lo"; //name of object
 
     let mut objects = Vec::<(String, Vec<Vec<f64>>)>::new();
     let path_rays = format!("./rays/{:}/", ray);
