@@ -51,7 +51,6 @@ fn compare(one: &[Vec<f64>], two: &[Vec<f64>], error: f64) -> f64 {
             seen.insert(i);
         }
     }
-    //println!("{}", count / length as f64);
     count / length as f64
 }
 
@@ -74,7 +73,7 @@ fn one_with_others(
 
 fn main() {
     let ray = 1280; //name of directory
-    let obj_cur = "tiguan"; //name of object
+    let obj_cur = "Suzanne_lo"; //name of object
 
     let mut objects = Vec::new();
     let path_rays = format!("./rays/{}/", ray);
@@ -99,13 +98,12 @@ fn main() {
     result.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
     print!("{}\n", "_".repeat(200));
     println!("{}", obj.0);
-    let bar = "▮".repeat(100);
     for (idx, similarity) in result {
         let percent = (similarity * 100.0).round() as usize;
         println!(
             "{:>36} |{:<100}| {:<14}",
             objects[idx].0,
-            &bar[..percent],
+            "▮".repeat(percent),
             similarity
         );
     }
