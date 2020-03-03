@@ -19,30 +19,36 @@ fn read(io: impl Read) -> io::Result<Vec<Vec<f64>>> {
 
 //Compares two objects
 fn compare(one: &Vec<Vec<f64>>, two: &Vec<Vec<f64>>, error: f64) -> f64 {
+    // assert_eq!(one.len(), two.len());
+    assert!(one.len() <= two.len());
+
     let length = one.len();
     let mut count: f64 = 0.0;
     let mut seen: HashSet<usize> = HashSet::new();
 
     for orig in one {
         let size = orig.len();
+        let min_similarity = (1.0 - error) * size as f64;
 
-        for i in 0..length {
-            if seen.contains(&i) {
-                continue;
-            }
-            let targ = &two[i];
+        let chosen = two.iter()
+            .enumerate()
+            .filter(|&(i, _)| !seen.contains(&i))
+            .find_map(|(i, targ)| {
+                let similarity = orig.iter()
+                    .zip(targ)
+                    .map(|(&x, &y)| 1.0 - (x - y).abs())
+                    .sum::<f64>();
 
-            let similarity = (0..size)
-                .map(|x| 1.0 - (orig[x] - targ[x]).abs())
-                .sum::<f64>();
+                if similarity < min_similarity {
+                    None
+                } else {
+                    Some((i, similarity))
+                }
+            });
 
-            if similarity < (1.0 - error) * size as f64 {
-                continue;
-            }
-
-            count += err_sum / size as f64;
+        if let Some((i, similarity)) = chosen {
+            count += similarity / size as f64;
             seen.insert(i);
-            break;
         }
     }
     //println!("{}", count / length as f64);
