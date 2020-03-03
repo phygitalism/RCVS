@@ -87,12 +87,12 @@ fn main() {
     );
 
     for path in paths {
-        let dir = &path.unwrap().path();
-        let name = dir.to_str().unwrap().split("/").last().unwrap();
+        let path = path.unwrap();
+        let name = path.file_name();
 
         objects.push((
-            name.to_string(),
-            read(fs::File::open(dir).unwrap()).unwrap(),
+            name.to_string_lossy().into_owned(),
+            read(fs::File::open(path.path()).unwrap()).unwrap(),
         ));
     }
 
