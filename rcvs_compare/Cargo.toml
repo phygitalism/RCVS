@@ -1,5 +1,5 @@
 [package]
-name = "rcvs"
+name = "rcvs_compare"
 version = "0.3.4"
 authors = ["Roman p4ymak Chumak"]
 edition = "2018"

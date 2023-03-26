@@ -128,7 +128,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rcvs"
+name = "rcvs_compare"
 version = "0.3.4"
 dependencies = [
  "rayon",

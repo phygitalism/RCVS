@@ -1,13 +1,23 @@
-RCVS
+# RCVS plugin for Blender
 
-Ray Casting Visual Search
+[Video](https://youtu.be/WNpm5r5vwTQ)
 
-Rust Dependencies: rayon
+## Building
 
-RCVS_blender.py - скрипт создания дескрипторов для выделенных объектов в сцене Blender.
+1. Compile Rust program `cd ./rcvs_compare; cargo build --release`
+2. Copy `rcvs_compare` from `target/release` into `blender_py`
+3. Archive `blender_py` as zip archive `.zip`
 
-ico_dicts - словари соответствия противоположных полигонов икосферы, необходимы для RCVS_blender.py.
+##  Blender installation
 
-rcvs_compare - программа на Rust для одновременного сравнения дескрипторов на разных потоках.
+```
+Preferences -> Add-ons -> Install (select created zip archive) -> enable
+```
 
-Применение: https://habr.com/ru/post/490760/
+## Plugin settings
+
+In the `Properties / Scene` will be RCVS Settings.
+
+You must choose directory with 3D objects ([OBJ](https://en.wikipedia.org/wiki/Wavefront_.obj_file)). For testing create such directory with a few objects.
+
+Choose any object in the scene and press Search in the Properties / Object.
